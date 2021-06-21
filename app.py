@@ -28,20 +28,28 @@ def bkapp_scatter(doc):
     p = figure()
     df = pd.DataFrame({
         'x': [1, 2, 3, 4, 5],
-        'y': [3, 6, 1, 5, 2]
+        'y': [3, 6, 1, 5, 2],
+        'u': [10, 12, 15, 20, 25],
+        'v': [3, 20, 10, 7, 14]
     })
 
     src = ColumnDataSource(df)
 
-    r = p.scatter(x='x', y='y', source=src, size=10, fill_color='red', line_color=None)
+    r = p.scatter(x='x', y='y', source=src, size='u', fill_color='red', line_color=None)
 
-    def callback(attr, old, new):
+    def callback_fill(attr, old, new):
         r.glyph.fill_color = new
 
-    select = Select(title="Fill Color:", value='red', options=['red', 'green'])
-    select.on_change('value', callback)
+    select_fill = Select(title="Fill Color:", value='red', options=['red', 'green'])
+    select_fill.on_change('value', callback_fill)
 
-    doc.add_root(column(p, select))
+    def callback_size(attr, old, new):
+        r.glyph.size = new
+
+    select_size = Select(title='Size By:', value='u', options=['u', 'v'])
+    select_size.on_change('value', callback_size)
+
+    doc.add_root(column(p, select_fill, select_size))
 
 
 @app.route('/scatter', methods=['GET'])
