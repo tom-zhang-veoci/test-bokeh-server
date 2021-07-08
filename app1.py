@@ -133,7 +133,7 @@ def bkapp_page_scatter(objectId, plotTemplateId, visualTemplateId):
               message='Could not get access token; invalid credentials specified.')
 
     # get form entries
-    BASE1 = 'https://stage.veoci.com/veoci/api/'
+    BASE1 = 'https://stage.veoci.com/api/v1/'
     # format = 'https://stage.veoci.com/veoci/api/<containerId>/forms/<formId>/entries/'
     try:
         entries_req = requests.get(BASE1 + str(plot_template['container_id']) + '/forms/' + str(objectId) + '/entries/',
